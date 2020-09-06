@@ -26,8 +26,7 @@ const gameContainer = document.querySelector('.game-container');
 
 const initGame = () => {
   openSettingsPage();
-  clearCardsArray();
-  
+  clearCardsArr();
 }
 
 const openSettingsPage = () => {
@@ -50,6 +49,7 @@ const handleSave = (e) => {
   updateGameState();
   renderGameState();
   closeSettingsPage();
+  resetTimer();
 }
 
 const closeSettingsPage = () => {
@@ -66,16 +66,18 @@ const updateGameState = () => {
 }
 
 const renderGameState = () => {
+  clearBoard();
   displayPlayerName();
-  createCards();
+  createCardsArr();
   renderBoard();
+  initTimer();
 }
 
 const displayPlayerName = () => {
   mainPage.querySelector("#name-display").textContent = gameState.playerName;
 }
 
-const createCards = () => {
+const createCardsArr = () => {
   let uniqePairId = randomGenerator(gameState.level/2, 20);
   uniqePairId.forEach(id => {
     createCard(id,'a');
@@ -106,12 +108,28 @@ const randomGenerator = (amount, total) => {
 const renderBoard = () => {
   cards.forEach(card => {
     const newEl = document.createElement('div');
-    newEl.classList.add('.card');
+    newEl.setAttribute("id",card.id);
     newEl.style.backgroundImage = `url(${card.imgSrc})`;
     gameContainer.appendChild(newEl);
     newEl.addEventListener("click", flipCard);
   });
+  gameContainer.setAttribute("level",`${gameState.level}`)
   setGridRatio();
+}
+
+
+const clearBoard = () => {
+  Array.from(gameContainer.childNodes).forEach(child => {
+    child.removeEventListener("click", flipCard);
+    child.remove();
+  })
+}
+
+
+const clearCardsArr = () => {
+  while (cards.length) {
+    cards.pop();
+  }
 }
 
 
@@ -137,23 +155,52 @@ const setGridRatio = () => {
 }
 
 
-
+// TODO
 const flipCard = () => {
 
 }
 
+// TODO
+const wrongGuess = () => {
 
-
-
-
-
-
-
-function clearCardsArray() {
-  while (cards.length) {
-    cards.pop();
-  }
 }
+
+
+// Timer Functions
+const initTimer = () => {
+  let timerDisplay = document.querySelector('.timer');
+  let min = 0;
+  let sec = 0;
+  let mlsec = 0;
+  tInterval = setInterval(() => {
+    mlsec = mlsec + 10;
+    if (mlsec > 999) {
+      mlsec = 0;
+      sec++;
+      if (sec > 59) {
+        sec = 0;
+        min++;
+      }
+    }        
+  updateTimerDisplay(timerDisplay,min,sec,mlsec);
+  }, 10);
+}
+
+const updateTimerDisplay = (timerDisplay,min,sec,mlsec) => {
+  let mlsecCalc = Math.floor(mlsec/10);
+  timerDisplay.textContent = 
+    (min  ? 
+    (min > 9 ? min : "0" + min) 
+    : "00") + ":" + (sec ? (sec > 9 ? sec : "0" + sec) : "00") + ":" + (mlsecCalc > 9 ? mlsecCalc : "0" + mlsecCalc);
+}
+
+const resetTimer = () => {
+  clearInterval(tInterval);
+  initTimer();
+}
+
+
+
 
 /********** Page Function Calls **********/
 initGame();
