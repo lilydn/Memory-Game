@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
+  <title>Memory-Game</title>
+</head>
+<body>
+  <div class="main-page">
+    <div class="header">
+      <p>hello, <span id="name-display"></span></p>
+      <h1>Memory Game</h1>
+      <button class="new-game-btn">New Game</button>
+    </div>
+    <div class="game-container"></div>
+    <div class="info-container">
+      <div class="info-container_container">
+        <div class="info_wrong-guesses">
+          <label>wrong guesses: <span class="wrong-guesses_counter">0</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- - - - - - - - - - - - - - - - - - -->
+  <div class="settings-page closed">
+    <div class="settings-page_inner">
+      <form>
+        <span>Your Name: <input type="text" id="name-input"></span> 
+        <div class="settings-page_radio-buttons">
+            <div class="choose-level-container">
+            <p>Level:</p>
+            <input type="radio" name="level" value="12" checked>
+            <label for="easy">Easy</label><br>
+            <input type="radio" name="level" value="18">
+            <label for="medium">Medium</label><br>
+            <input type="radio" name="level" value="24">
+            <label for="hard">Hard</label><br>
+            <input type="radio" name="level" value="30">
+            <label for="ninja">Ninja</label>
+          </div>
+          <div class="choose-theme-container">
+            <p>Theme:</p>
+            <input type="radio" name="theme" value="food" checked>
+            <label for="food">Food</label><br>
+            <input type="radio" name="theme" value="vehicles">
+            <label for="vehicles">Vehicles</label><br>
+            <input type="radio" name="theme" value="animals">
+            <label for="animals">Animals</label>
+            <!-- <input type="radio" name="theme" value="mix">
+            <label for="mix">Mix Everything</label> -->
+          </div>
+        </div>
+
+        <button type="submit">Save</button>
+      </form>
+
+      
+      
+    </div>
+  </div>
+  <!-- - - - - - - - - - - - - - - - - - -->
+  <script src="./script.js"></script>
+</body>
+</html>

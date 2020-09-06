@@ -1,0 +1,126 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* :root {
+  --yellow-bright: rgba(252,247,221,1);
+}*/
+
+/* html {
+  font-size: 62.5%;
+} */
+
+body {
+  /* font-family: 'Handlee', cursive; */
+  height: 100vh;
+  background-color: rgb(245, 241, 206);
+} 
+
+.main-page {
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+}
+
+button,
+input[type="submit"] {
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.header p {
+  font-size: 2rem;
+}
+
+.game-container {
+  background-color: rgb(117, 117, 117);
+  height: 70vh;
+  margin: 30px 50px 0 50px;
+  display: grid;
+  grid-gap: 6px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  /* grid-template-columns: repeat(4, minmax(100px, 200px)); */
+}
+
+
+.game-container > div {
+  background-color: rgb(37, 36, 36);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.info-container {
+  background-color: white;
+  height: 6vh;
+  margin: 0 50px;
+}
+
+/* - - - - - - - - - - - - - - - - - - - */
+
+.settings-page {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  pointer-events: all;
+  transition: opacity 0.5s;
+}
+
+.settings-page.closed {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.settings-page_inner {
+  border-radius: 6px;
+  background: white;
+  transform: translateY(-100vh);
+  transition: all 0.8s;
+  /* height: calc(100vh - 100px); */
+  color: black;
+}
+
+.settings-page .settings-page_inner {
+  transform: translateY(0);
+}
+
+.settings-page_inner form {
+  display: flex;
+  flex-direction: column;
+  margin: 3rem;
+}
+
+.settings-page_inner form > div,
+.settings-page_inner form > button {
+  margin-top: 1.7rem;
+}
+
+.settings-page_radio-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.settings-page_radio-buttons p {
+  margin-bottom: 8px;
+}
+/* - - - - - - - - - - - - - - - - - - - */
