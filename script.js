@@ -155,6 +155,11 @@ const setGridRatio = () => {
 }
 
 
+//TODO
+const randomizeCardLocations = () => {
+
+}
+
 // TODO
 const flipCard = () => {
 
