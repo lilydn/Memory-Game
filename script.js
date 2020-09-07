@@ -12,10 +12,12 @@ const gameState = {
 
 const mainPage = document.querySelector('.main-page');
 const settinsPage = document.querySelector(".settings-page");
+const gameContainer = document.querySelector('.game-container');
+
 const saveBtn = settinsPage.querySelector("[type=submit]");
 const newGameBtn = document.querySelector(".new-game-btn");
 
-const gameContainer = document.querySelector('.game-container');
+
 
 
 
@@ -49,7 +51,7 @@ const handleSave = (e) => {
   updateGameState();
   renderGameState();
   closeSettingsPage();
-  resetTimer();
+  initTimer(false);
 }
 
 const closeSettingsPage = () => {
@@ -70,13 +72,16 @@ const renderGameState = () => {
   displayPlayerName();
   createCardsArr();
   renderBoard();
-  initTimer();
+  initTimer(true);
 }
 
 const displayPlayerName = () => {
   mainPage.querySelector("#name-display").textContent = gameState.playerName;
 }
 
+/* - - - - - - - - - - - - - - - - */
+
+// for each number in the returned array, creates two cards with the same imgSrc but different id, and pushes each card into the array of cards.
 const createCardsArr = () => {
   let uniqePairId = randomGenerator(gameState.level/2, 20);
   uniqePairId.forEach(id => {
@@ -94,7 +99,9 @@ const createCard = (id,suffix) => {
   cards.push(newCard);
 }
     
-
+// draws randomely (gameState.level/2) out of 20 possible images. Returns an array of numbers in the range from 1 to 20. 
+// takes care that the numbers do not repeat, so we wont have more than one pair of each card.
+// returns an array
 const randomGenerator = (amount, total) => {
   let res = [];
   for (let i = 0; i < amount; i++) {
@@ -104,20 +111,26 @@ const randomGenerator = (amount, total) => {
   return res;
 }
 
+/* - - - - - - - - - - - - - - - - */
 
+// generates an array with all the numbers from 1 to gameState.level randomized without repetition
+// each number is an index in the cards array
+// for each index creates an element and injects it to the DOM
 const renderBoard = () => {
-  cards.forEach(card => {
+  let randomIndexes = randomGenerator(gameState.level,gameState.level);
+  randomIndexes.forEach(index => {
+    drawCard();
     const newEl = document.createElement('div');
     newEl.setAttribute("id",card.id);
     newEl.style.backgroundImage = `url(${card.imgSrc})`;
     gameContainer.appendChild(newEl);
     newEl.addEventListener("click", flipCard);
   });
-  gameContainer.setAttribute("level",`${gameState.level}`)
+  gameContainer.setAttribute("level",`${gameState.level}`); //for media queries
   setGridRatio();
 }
 
-
+// clears the display of cards by removing the elements from the DOM
 const clearBoard = () => {
   Array.from(gameContainer.childNodes).forEach(child => {
     child.removeEventListener("click", flipCard);
@@ -125,14 +138,14 @@ const clearBoard = () => {
   })
 }
 
-
+// clears cards data
 const clearCardsArr = () => {
   while (cards.length) {
     cards.pop();
   }
 }
 
-
+// sets the html grid rows and cols depending on the level
 const setGridRatio = () => {
   switch (gameState.level) {
     case "12":
@@ -157,7 +170,8 @@ const setGridRatio = () => {
 
 //TODO
 const randomizeCardLocations = () => {
-
+  //an array with all the numbers from 1 to gameState.level randomized without repetition:
+  let randomIndexes = randomGenerator(gameState.level,gameState.level);
 }
 
 // TODO
@@ -172,12 +186,14 @@ const wrongGuess = () => {
 
 
 // Timer Functions
-const initTimer = () => {
+const initTimer = (go) => {
   let timerDisplay = document.querySelector('.timer');
+  timerDisplay.textContent = '00:00:00';
   let min = 0;
   let sec = 0;
   let mlsec = 0;
   tInterval = setInterval(() => {
+    if(go) {
     mlsec = mlsec + 10;
     if (mlsec > 999) {
       mlsec = 0;
@@ -188,7 +204,8 @@ const initTimer = () => {
       }
     }        
   updateTimerDisplay(timerDisplay,min,sec,mlsec);
-  }, 10);
+  }}, 10);
+  !go ?  clearInterval(tInterval) : ''; 
 }
 
 const updateTimerDisplay = (timerDisplay,min,sec,mlsec) => {
@@ -199,10 +216,10 @@ const updateTimerDisplay = (timerDisplay,min,sec,mlsec) => {
     : "00") + ":" + (sec ? (sec > 9 ? sec : "0" + sec) : "00") + ":" + (mlsecCalc > 9 ? mlsecCalc : "0" + mlsecCalc);
 }
 
-const resetTimer = () => {
-  clearInterval(tInterval);
-  initTimer();
-}
+// const resetTimer = () => {
+//   clearInterval(tInterval);
+//   initTimer();
+// }
 
 
 
